@@ -14,7 +14,6 @@ import ReactFlow, {
   useReactFlow,
 } from 'reactflow'
 import 'reactflow/dist/style.css'
-import { Loader2 } from 'lucide-react'
 import { useShallow } from 'zustand/react/shallow'
 import type { OAuthConnectEventDetail } from '@/lib/copilot/tools/client/other/oauth-request-access'
 import { createLogger } from '@/lib/logs/console/logger'
@@ -107,7 +106,6 @@ interface BlockData {
  * Renders the ReactFlow canvas with blocks, edges, and all interactive features.
  */
 const WorkflowContent = React.memo(() => {
-  const [isCanvasReady, setIsCanvasReady] = useState(false)
   const [potentialParentId, setPotentialParentId] = useState<string | null>(null)
   const [selectedEdgeInfo, setSelectedEdgeInfo] = useState<SelectedEdgeInfo | null>(null)
   const [isErrorConnectionDrag, setIsErrorConnectionDrag] = useState(false)
@@ -1268,14 +1266,10 @@ const WorkflowContent = React.memo(() => {
         (activeWorkflowId === currentId && hydration.phase !== 'ready'))
 
     if (needsWorkflowLoad) {
-      // Mark this workflow as being loaded to prevent duplicate calls
       loadingWorkflowRef.current = currentId
 
       const { clearDiff } = useWorkflowDiffStore.getState()
       clearDiff()
-
-      // Reset canvas ready state when loading a new workflow
-      setIsCanvasReady(false)
 
       setActiveWorkflow(currentId)
         .catch((error) => {
@@ -2144,18 +2138,10 @@ const WorkflowContent = React.memo(() => {
     }
   }, [collaborativeSetSubblockValue])
 
-  const showSkeletonUI = !isWorkflowReady
-
-  if (showSkeletonUI) {
+  if (!isWorkflowReady) {
     return (
       <div className='flex h-full w-full flex-col overflow-hidden bg-[var(--bg)]'>
-        <div className='relative h-full w-full flex-1 bg-[var(--bg)]'>
-          <div className='workflow-container flex h-full items-center justify-center bg-[var(--bg)]'>
-            <div className='flex flex-col items-center gap-3'>
-              <Loader2 className='h-5 w-5 animate-spin text-muted-foreground' />
-            </div>
-          </div>
-        </div>
+        <div className='relative h-full w-full flex-1 bg-[var(--bg)]' />
         <Panel />
         <Terminal />
       </div>
@@ -2181,12 +2167,7 @@ const WorkflowContent = React.memo(() => {
           onDrop={effectivePermissions.canEdit ? onDrop : undefined}
           onDragOver={effectivePermissions.canEdit ? onDragOver : undefined}
           onInit={(instance) => {
-            // Single RAF ensures nodes are measured before fitView calculates viewport
-            // Then reveal canvas to prevent any visual jank
-            requestAnimationFrame(() => {
-              instance.fitView(reactFlowFitViewOptions)
-              setIsCanvasReady(true)
-            })
+            instance.fitView({ padding: 0.8, duration: 200 })
           }}
           fitViewOptions={reactFlowFitViewOptions}
           minZoom={0.1}
@@ -2211,7 +2192,7 @@ const WorkflowContent = React.memo(() => {
           noWheelClassName='allow-scroll'
           edgesFocusable={true}
           edgesUpdatable={effectivePermissions.canEdit}
-          className={`workflow-container h-full bg-[var(--bg)] transition-opacity duration-150 ${isCanvasReady ? 'opacity-100' : 'opacity-0'}`}
+          className='workflow-container h-full bg-[var(--bg)]'
           onNodeDrag={effectivePermissions.canEdit ? onNodeDrag : undefined}
           onNodeDragStop={effectivePermissions.canEdit ? onNodeDragStop : undefined}
           onNodeDragStart={effectivePermissions.canEdit ? onNodeDragStart : undefined}
