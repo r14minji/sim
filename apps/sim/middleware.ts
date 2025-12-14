@@ -134,6 +134,26 @@ function handleSecurityFiltering(request: NextRequest): NextResponse | null {
 export async function middleware(request: NextRequest) {
   const url = request.nextUrl
 
+  // Development mode: Bypass all authentication checks
+  const disableAuth = process.env.DISABLE_AUTH === 'true'
+  if (disableAuth) {
+    logger.info('🚨 AUTH DISABLED - Bypassing middleware authentication checks')
+
+    // Skip all auth-related redirects, just apply security headers
+    const response = NextResponse.next()
+    response.headers.set('Vary', 'User-Agent')
+
+    if (
+      url.pathname.startsWith('/workspace') ||
+      url.pathname.startsWith('/chat') ||
+      url.pathname === '/'
+    ) {
+      response.headers.set('Content-Security-Policy', generateRuntimeCSP())
+    }
+
+    return response
+  }
+
   const sessionCookie = getSessionCookie(request)
   const hasActiveSession = !!sessionCookie
 

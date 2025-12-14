@@ -259,6 +259,7 @@ const nextConfig: NextConfig = {
   },
   async rewrites() {
     return [
+      // PostHog analytics
       {
         source: '/ingest/static/:path*',
         destination: 'https://us-assets.i.posthog.com/static/:path*',
@@ -267,6 +268,23 @@ const nextConfig: NextConfig = {
         source: '/ingest/:path*',
         destination: 'https://us.i.posthog.com/:path*',
       },
+      // External API proxy (개발 환경에서만 사용 권장)
+      ...(isDev
+        ? [
+            {
+              source: '/manual/:path*',
+              destination: 'http://plugnet.ai/manual/:path*',
+            },
+            {
+              source: '/admin/:path*',
+              destination: 'http://plugnet.ai/admin/:path*',
+            },
+            {
+              source: '/api/:path*',
+              destination: 'http://plugnet.ai/api/:path*',
+            },
+          ]
+        : []),
     ]
   },
 }
