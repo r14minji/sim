@@ -4,7 +4,8 @@
       "Bash(cat:*)",
       "Bash(psql:*)",
       "Bash(bun run:*)",
-      "Bash(bun:*)"
+      "Bash(bun:*)",
+      "Bash(test:*)"
     ]
   }
 }

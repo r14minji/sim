@@ -220,11 +220,6 @@ export const env = createEnv({
     LINKEDIN_CLIENT_ID:                    z.string().optional(),                  // LinkedIn OAuth client ID
     LINKEDIN_CLIENT_SECRET:                z.string().optional(),                  // LinkedIn OAuth client secret
 
-    // Keycloak SSO
-    KEYCLOAK_SERVER_URL:                   z.string().url().optional(),            // Keycloak server URL (e.g., http://plugnet.ai)
-    KEYCLOAK_REALM:                        z.string().optional(),                  // Keycloak realm name (e.g., plugnet-dev)
-    KEYCLOAK_CLIENT_ID:                    z.string().optional(),                  // Keycloak OAuth client ID (defaults to admin-console for public client)
-
     // E2B Remote Code Execution
     E2B_ENABLED:                           z.string().optional(),                  // Enable E2B remote code execution
     E2B_API_KEY:                           z.string().optional(),                  // E2B API key for sandbox creation

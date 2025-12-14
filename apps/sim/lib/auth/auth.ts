@@ -1634,23 +1634,6 @@ export const auth = betterAuth({
             }
           },
         },
-
-        // Keycloak SSO provider
-        ...(env.KEYCLOAK_SERVER_URL && env.KEYCLOAK_REALM && env.KEYCLOAK_CLIENT_ID
-          ? [
-              {
-                providerId: 'keycloak',
-                clientId: env.KEYCLOAK_CLIENT_ID as string,
-                discoveryUrl: `${env.KEYCLOAK_SERVER_URL}/realms/${env.KEYCLOAK_REALM}/.well-known/openid-configuration`,
-                scopes: ['openid', 'profile', 'email'],
-                responseType: 'code',
-                pkce: true, // Enable PKCE for public client (admin-console)
-                accessType: 'offline',
-                prompt: 'consent',
-                redirectURI: `${getBaseUrl()}/api/auth/oauth2/callback/keycloak`,
-              },
-            ]
-          : []),
       ],
     }),
     // Include SSO plugin when enabled
