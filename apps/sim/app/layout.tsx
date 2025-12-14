@@ -8,6 +8,7 @@ import '@/app/_styles/globals.css'
 
 import { OneDollarStats } from '@/components/analytics/onedollarstats'
 import { HydrationErrorHandler } from '@/app/_shell/hydration-error-handler'
+import { KeycloakProvider } from '@/app/_shell/providers/keycloak-provider'
 import { QueryProvider } from '@/app/_shell/providers/query-provider'
 import { SessionProvider } from '@/app/_shell/providers/session-provider'
 import { ThemeProvider } from '@/app/_shell/providers/theme-provider'
@@ -187,16 +188,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <HydrationErrorHandler />
         <OneDollarStats />
         <PostHogProvider>
-          <ThemeProvider>
-            <QueryProvider>
-              <SessionProvider>
-                <BrandedLayout>
-                  <ZoomPrevention />
-                  {children}
-                </BrandedLayout>
-              </SessionProvider>
-            </QueryProvider>
-          </ThemeProvider>
+          <KeycloakProvider>
+            <ThemeProvider>
+              <QueryProvider>
+                <SessionProvider>
+                  <BrandedLayout>
+                    <ZoomPrevention />
+                    {children}
+                  </BrandedLayout>
+                </SessionProvider>
+              </QueryProvider>
+            </ThemeProvider>
+          </KeycloakProvider>
         </PostHogProvider>
       </body>
     </html>

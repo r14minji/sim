@@ -220,6 +220,11 @@ export const env = createEnv({
     LINKEDIN_CLIENT_ID:                    z.string().optional(),                  // LinkedIn OAuth client ID
     LINKEDIN_CLIENT_SECRET:                z.string().optional(),                  // LinkedIn OAuth client secret
 
+    // Keycloak SSO
+    KEYCLOAK_SERVER_URL:                   z.string().url().optional(),            // Keycloak server URL (e.g., http://plugnet.ai)
+    KEYCLOAK_REALM:                        z.string().optional(),                  // Keycloak realm name (e.g., plugnet-dev)
+    KEYCLOAK_CLIENT_ID:                    z.string().optional(),                  // Keycloak OAuth client ID (defaults to admin-console for public client)
+
     // E2B Remote Code Execution
     E2B_ENABLED:                           z.string().optional(),                  // Enable E2B remote code execution
     E2B_API_KEY:                           z.string().optional(),                  // E2B API key for sandbox creation
@@ -306,6 +311,11 @@ export const env = createEnv({
     NEXT_PUBLIC_TRIGGER_DEV_ENABLED:       z.boolean().optional(),                 // Client-side gate for async executions UI
     NEXT_PUBLIC_SSO_ENABLED:               z.boolean().optional(),                 // Enable SSO login UI components
     NEXT_PUBLIC_EMAIL_PASSWORD_SIGNUP_ENABLED: z.boolean().optional().default(true), // Control visibility of email/password login forms
+
+    // Keycloak Client Configuration
+    NEXT_PUBLIC_KEYCLOAK_URL:              z.string().url().optional(),            // Keycloak server URL (client-side access)
+    NEXT_PUBLIC_KEYCLOAK_REALM:            z.string().optional(),                  // Keycloak realm name (client-side access)
+    NEXT_PUBLIC_KEYCLOAK_CLIENT_ID:        z.string().optional(),                  // Keycloak OAuth client ID (client-side access)
   },
 
   // Variables available on both server and client
@@ -341,6 +351,9 @@ export const env = createEnv({
     NEXT_PUBLIC_COPILOT_TRAINING_ENABLED: process.env.NEXT_PUBLIC_COPILOT_TRAINING_ENABLED,
     NEXT_PUBLIC_POSTHOG_ENABLED: process.env.NEXT_PUBLIC_POSTHOG_ENABLED,
     NEXT_PUBLIC_POSTHOG_KEY: process.env.NEXT_PUBLIC_POSTHOG_KEY,
+    NEXT_PUBLIC_KEYCLOAK_URL: process.env.NEXT_PUBLIC_KEYCLOAK_URL,
+    NEXT_PUBLIC_KEYCLOAK_REALM: process.env.NEXT_PUBLIC_KEYCLOAK_REALM,
+    NEXT_PUBLIC_KEYCLOAK_CLIENT_ID: process.env.NEXT_PUBLIC_KEYCLOAK_CLIENT_ID,
     NODE_ENV: process.env.NODE_ENV,
     NEXT_TELEMETRY_DISABLED: process.env.NEXT_TELEMETRY_DISABLED,
   },

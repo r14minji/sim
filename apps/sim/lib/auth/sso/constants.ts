@@ -30,6 +30,7 @@ export const SSO_TRUSTED_PROVIDERS = [
   'shibboleth-idp',
   'google-workspace',
   'google-sso',
+  'keycloak',
   'saml',
   'saml2',
   'saml-sso',
