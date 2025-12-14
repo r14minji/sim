@@ -187,31 +187,38 @@ export function mapRouteToWorkflow(routeId: string) {
 
 ```
 app/
-├── (auth)/              # Keycloak 인증
+├── (auth)/
 │   └── login/
+│
 ├── (public)/
-│   ├── page.tsx         # 대시보드
+│   ├── page.tsx
 │   ├── chat/
 │   ├── templates/
 │   └── invite/
+│
+├── (platform)/                    # ← 새로 생성
+│   ├── layout.tsx                 # ← Platform 공통 레이아웃
+│   ├── projects/
+│   ├── users/
+│   ├── groups/
+│   ├── model-credential/
+│   ├── deployed-model/
+│   ├── notices/
+│   ├── history/
+│   ├── usages/
+│   ├── infra/
+│   └── data/
+│
 ├── [projectId]/
 │   └── console/
+│       ├── layout.tsx             # ← Console 공통 레이아웃
 │       ├── page.tsx
-│       ├── route/       # ← Step 2에서 마이그레이션
+│       ├── route/
 │       ├── members/
 │       ├── models/
 │       ├── prompt-playground/
 │       └── history/
-├── projects/
-├── users/
-├── groups/
-├── model-credential/
-├── deployed-model/
-├── notices/
-├── history/
-├── usages/
-├── infra/
-├── data/
+│
 └── workspace/           # 기존 Next.js 페이지
 ```
 
