@@ -714,3 +714,66 @@ export function SidebarTeamSelect() {
   );
 }
 ```
+
+각 파일에 TODO 주석으로 표시된 부분들이 있습니다:
+
+app-sidebar.tsx:
+
+- 이미지 import (hoverLogo, plugnetLogo, plugnetLogoMini)
+- useUserProfile 훅
+- Redux dispatch 관련 코드
+- getNavMenuItems 함수
+- cn 유틸리티
+
+header.tsx:
+
+- getBreadcrumbMenuItems 함수
+
+nav-main.tsx:
+
+- MenuItem 타입 (현재 임시로 정의됨)
+- Keycloak 인증 (useKeycloak, hasAnyRole)
+
+nav-user.tsx:
+
+- Keycloak logout 기능
+- 현재 console.log로 placeholder 처리됨
+
+sidebar-team-select.tsx:
+
+- Redux 관련 코드
+- useLocalStorage 훅
+- UserService.useUserGroups API 호출
+- Group 타입
+- cn 유틸리티
+
+다음 단계
+
+1. 이미지 파일 추가
+
+
+    - /public/images/ 또는 /apps/sim/app/_assets/images/에 로고 이미지 배치
+
+2. 유틸리티 함수 구현
+
+
+    - getNavMenuItems() - 메뉴 아이템 정의
+    - getBreadcrumbMenuItems() - 브레드크럼 정의
+    - cn() - 클래스 유틸리티 (또는 기존 것 import)
+
+3. 타입 정의
+
+
+    - MenuItem 인터페이스를 적절한 위치로 이동
+
+4. API/서비스 연동
+
+
+    - User profile 조회
+    - Groups 조회
+    - Keycloak 인증
+
+5. Redux 설정 (필요한 경우)
+
+
+    - userSlice, groupSlice 연동
