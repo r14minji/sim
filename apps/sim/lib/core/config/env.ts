@@ -316,6 +316,9 @@ export const env = createEnv({
     NEXT_PUBLIC_KEYCLOAK_URL:              z.string().url().optional(),            // Keycloak server URL (client-side access)
     NEXT_PUBLIC_KEYCLOAK_REALM:            z.string().optional(),                  // Keycloak realm name (client-side access)
     NEXT_PUBLIC_KEYCLOAK_CLIENT_ID:        z.string().optional(),                  // Keycloak OAuth client ID (client-side access)
+
+    // External API Configuration
+    NEXT_PUBLIC_API_BASE_URL:              z.string().url().optional(),            // External API base URL (requires Keycloak authentication)
   },
 
   // Variables available on both server and client
@@ -354,6 +357,7 @@ export const env = createEnv({
     NEXT_PUBLIC_KEYCLOAK_URL: process.env.NEXT_PUBLIC_KEYCLOAK_URL,
     NEXT_PUBLIC_KEYCLOAK_REALM: process.env.NEXT_PUBLIC_KEYCLOAK_REALM,
     NEXT_PUBLIC_KEYCLOAK_CLIENT_ID: process.env.NEXT_PUBLIC_KEYCLOAK_CLIENT_ID,
+    NEXT_PUBLIC_API_BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL,
     NODE_ENV: process.env.NODE_ENV,
     NEXT_TELEMETRY_DISABLED: process.env.NEXT_TELEMETRY_DISABLED,
   },
